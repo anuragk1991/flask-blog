@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, url_for, flash, redirect, request, abort
 from flaskblog import db
-from flaskblog.forms import PostForm
+from flaskblog.posts.forms import PostForm
 from flaskblog.models import Post
 from flask_login import current_user, login_required
 
@@ -15,7 +15,7 @@ def add_post():
 		db.session.add(post)
 		db.session.commit()
 		flash('Your posted added successfully', 'success')
-		return redirect(url_for('home'))
+		return redirect(url_for('main.home'))
 	return render_template('create_post.html', title='Add Post', form=form, legend='Add Post')
 
 @posts.route('/post/<int:post_id>')
@@ -36,7 +36,7 @@ def update_post(post_id):
 		post.content = form.content.data
 		db.session.commit()
 		flash('Your post updated successfully!', 'success')
-		return redirect(url_for('post', post_id=post.id))
+		return redirect(url_for('posts.post', post_id=post.id))
 	elif request.method == 'GET':
 		form.title.data = post.title
 		form.content.data = post.content
@@ -55,4 +55,4 @@ def delete_post(post_id):
 	db.session.commit()
 	flash('Post deleted successfully', 'success')
 
-	return redirect(url_for('home'))
+	return redirect(url_for('main.home'))

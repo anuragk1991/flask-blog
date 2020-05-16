@@ -7,7 +7,7 @@ from flask_mail import Message
 
 def send_reset_mail(user, token):
 	msg = Message('Reset Password Link', sender='flaskblog.py@gmail.com', recipients=[user.email])
-	msg.body = url_for('reset_password', token=token, _external=True)
+	msg.body = url_for('users.reset_password', token=token, _external=True)
 
 	mail.send(msg)
 

@@ -7,25 +7,11 @@ from flaskblog.forms import RegisterForm, LoginForm, AccountUpdateForm, PostForm
 from flaskblog.models import User, Post
 from flask_login import login_user, logout_user, current_user, login_required
 
-posts = [
-	{
-		'author': 'Anurag',	
-		'title': 'First Post',	
-		'date_posted': 'April 24, 2020',
-		'content': 'Details of the post'	
-	},
-	{
-		'author': 'Anurag',	
-		'title': 'Second Post',	
-		'date_posted': 'April 24, 2020',
-		'content': 'Details of the second post'	
-	}
-]
-
 @app.route("/")
 @app.route("/home")
 def home():
-	posts = Post.query.all()
+	page = request.args.get('page', 1, type=int)
+	posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
 	return render_template('home.html', posts=posts)
 
 

@@ -1,8 +1,8 @@
 import os
 import secrets
 from PIL import Image
-from flask import url_for
-from flaskblog import app, mail
+from flask import url_for, current_app
+from flaskblog import mail
 from flask_mail import Message
 
 def send_reset_mail(user, token):
@@ -15,7 +15,7 @@ def savePictureFile(picture):
 	random_fn = secrets.token_hex(8)
 	_, file_ext = os.path.splitext(picture.filename)
 	filename = random_fn+file_ext
-	image = os.path.join(app.root_path, 'static/profile_pics', filename)
+	image = os.path.join(current_app.root_path, 'static/profile_pics', filename)
 
 	size = (200, 200)
 	i = Image.open(picture)

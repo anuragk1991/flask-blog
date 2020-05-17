@@ -1,6 +1,6 @@
 import os
-from flask import Blueprint, render_template, url_for, flash, redirect, request, abort
-from flaskblog import app, db, bcrypt
+from flask import Blueprint, render_template, url_for, flash, redirect, request, abort, current_app as app
+from flaskblog import db, bcrypt
 from flaskblog.users.forms import RegisterForm, LoginForm, AccountUpdateForm, ForgotPasswordForm, ResetPasswordForm
 from flaskblog.models import User, Post
 from flask_login import login_user, logout_user, current_user, login_required
